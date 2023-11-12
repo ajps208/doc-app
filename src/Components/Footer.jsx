@@ -10,16 +10,21 @@ function Footer() {
 
   return (
     <>
-    <hr />
-     <div
-      className="d-flex flex-column justify-content-center align-items-center "
-      style={{ width: "100%", height: "250px" }}
-    >
-      <div className="footer-content d-flex justify-content-evenly w-100 flex-wrap">
+    
+    <div
+  className="d-flex flex-column justify-content-center align-items-center"
+  style={{
+    width: "100%",
+    height: "300px",
+    backgroundColor: "#f9fcff",
+    backgroundImage: "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+  }}
+>
+      <div className="footer-content d-flex justify-content-evenly mt-5 w-100 flex-wrap">
         <div style={{ width: "400px" }} className="website">
           <h4>
            
-        <img width={"165px"}  src={!mode?Logo:Logo1} className="img-fluid" alt="" />
+        <img width={"165px"}  src={!mode?Logo:Logo1} className="img-fluid pt-5" alt="" />
           </h4>
           <h6>
           Designed with passion and precision by Ajith PS.
