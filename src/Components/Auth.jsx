@@ -65,7 +65,7 @@ function Auth({ register }) {
  const forgetPassword=()=>{
   sendPasswordResetEmail(firebaseAuth, email)
   .then(() => {
-    alert("check your email")
+    toast.info("check your email")
   })
   .catch((error) => {
     const errorCode = error.code;

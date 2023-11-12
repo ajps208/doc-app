@@ -91,7 +91,7 @@ function View() {
   
   return (
    <>
-      {loginStatus?<div className='d-flex flex-wrap '>
+      {loginStatus?<div style={{minHeight:"100vh"}} className='d-flex flex-wrap '>
   {allNotes.length>0 ?allNotes.map((note) => (
           <div key={note.id} style={{ width: "280px", position: "relative" }}>
             <img  onClick={()=>handleShow(note.data.name,note.data.description,note.id)} style={{ objectFit: "cover" }} className="img-fluid w-100 mt-0 po" src={sticky} alt="" />

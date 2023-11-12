@@ -11,11 +11,11 @@ function DisplayPage() {
 
   return (
    <>
-    {loginStatus?  <div>
+    {loginStatus?  <div style={{minHeight:"100vh"}}>
        <div className="container d-flex align-items-center justify-content-between mt-0">
         {/* <Link to={"/watch-history"} style={{textDecoration:"none",color:"white"}} className='fs-5'>Watch History</Link> */}
       </div>
-      <Row className="container-fluid   w-100 ">
+      <Row  className="container-fluid   w-100 ">
         <Col className='all-videos col-lg-12 mt-5'>
          <div className='d-flex '>
             <h2 className='px-5 '>All Notes</h2>

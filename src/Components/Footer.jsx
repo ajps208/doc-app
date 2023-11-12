@@ -13,7 +13,7 @@ function Footer() {
     <hr />
      <div
       className="d-flex flex-column justify-content-center align-items-center "
-      style={{ width: "100%", height: "300px" }}
+      style={{ width: "100%", height: "250px" }}
     >
       <div className="footer-content d-flex justify-content-evenly w-100 flex-wrap">
         <div style={{ width: "400px" }} className="website">
@@ -57,7 +57,7 @@ Created with love for the craft.
               placeholder="Enter Your Mail"
               type="text"
             />
-            <div className="btn btn-primary ms-3">Subscribe</div>
+            <div className="btn btn-primary w-50 h-75 ms-3">Subscribe</div>
           </div>
           <div className="d-flex justify-content-evenly mt-3 fs-5">
             <Link
