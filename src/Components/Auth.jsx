@@ -3,7 +3,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import { useSelector,useDispatch} from "react-redux";
 import Logo from "../Images/notesin-low-resolution-logo-color-on-transparent-background.png";
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'firebase/auth';
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail} from 'firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {addDoc, collection,getDocs } from 'firebase/firestore';
@@ -62,7 +62,18 @@ function Auth({ register }) {
             toast.warning(errorMessage);
           });
       };
+ const forgetPassword=()=>{
+  sendPasswordResetEmail(firebaseAuth, email)
+  .then(() => {
+    alert("check your email")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
 
+ }
 // Assuming 'firestore' is your Firestore instance
 
   return (
@@ -102,6 +113,8 @@ function Auth({ register }) {
                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                      
                      <Form.Control onChange={(e)=>setPassword(e.target.value)} type="password" required  minlength="8" placeholder="Enter Password" />
+                     
+                    {!isRegisterForm&& <p className='fs-1x' onClick={forgetPassword}><u>Forget Password</u></p>}
                    </Form.Group>
                    {
                     isRegisterForm?
