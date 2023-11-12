@@ -1,0 +1,12 @@
+/* Add this CSS to your stylesheet */
+.btn-transparent:hover {
+    background-color: #0f0e0e7b; /* Change the background color to a desired color */
+    color: #faf5f5; /* Change the text color when hovered, if needed */
+
+  }
+  @media screen and (max-width: 480px) {
+   #first{
+    padding: 0px 20px;
+   }
+  }
+  

@@ -1,0 +1,1 @@
+export const serverURL="https://notesin-server.onrender.com"
