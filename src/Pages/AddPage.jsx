@@ -97,7 +97,10 @@ function AddPage({edit}) {
         toast.warning(error)
       });
   };
-  
+  const handleReset=()=>{
+    setTitile("")
+    setValue("")
+  }
   
 
   return (
@@ -134,7 +137,7 @@ function AddPage({edit}) {
                   <input onClick={(e) =>isEdit? handleUpdate(e): handleNotes(e)} type="reset" name="btnSubmit" className="btnContact bg-danger" value="Submit" />
                 </div>
                 <div className="form-group pt-3">
-                  <input type="submit" name="btnSubmit" className="btnContact bg-info" value="Reset" />
+                  <input type="button" onClick={handleReset} name="btnSubmit" className="btnContact bg-info" value="Reset" />
                 </div>
               </div>
             </div>

@@ -16,7 +16,7 @@ function DisplayPage() {
         {/* <Link to={"/watch-history"} style={{textDecoration:"none",color:"white"}} className='fs-5'>Watch History</Link> */}
       </div>
       <Row className="container-fluid   w-100 ">
-        <Col className='all-videos col-lg-8 mt-5'>
+        <Col className='all-videos col-lg-12 mt-5'>
          <div className='d-flex '>
             <h2 className='px-5 '>All Notes</h2>
              <h6 className='mt-3 text-danger'><Link className='text-danger' style={{textDecoration:"none"}} to={'/favourites'}>view favourites</Link></h6>
