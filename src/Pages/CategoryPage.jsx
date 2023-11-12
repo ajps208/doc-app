@@ -1,78 +1,128 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getACategories, getANotes, updateCategory } from '../Services/allAPI';
-import { Modal } from 'react-bootstrap';
+import React,{useEffect, useState} from 'react'
+import {  Modal } from 'react-bootstrap'
 import sticky from '../Images/note.png';
+import { doc,collection, query, where, getDocs,deleteDoc,updateDoc} from "firebase/firestore";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
-function CategoryPage() {
+
+
+function View() {
+  
+  const navigateByUrl = useNavigate();
+
+  const navigate = (id) => {
+  
+    navigateByUrl(`/edit/${id}`);
+  };
+  
+  const mode = useSelector((state) => state.darkmode.modestatus);
+  const loginStatus = useSelector((state) => state.loginSlice.loginstate);
+  const userID = useSelector((state) => state.loginSlice.userid);
+  const firestore = useSelector((state) => state.firebaseSlice.Firestore);
+  const [allNotes,setAllNotes]=useState([])
+  const[title,setTitle]=useState("")
+  const[description,setDescription]=useState("")
+  const[userid,setUserId]=useState("")
+
   const [show, setShow] = useState(false);
-  const [notesdata, setNoteData] = useState([]);
-  const [cat, setCat] = useState({});
-  const { categoryId } = useParams();
   const handleClose = () => setShow(false);
+  const handleShow =async (name,des,id) =>{
+     setShow(true)
+     setTitle(name)
+     setDescription(des)
+     setUserId(id)
+    };
+    const handleDelete=(uid)=>{
 
-  const handleShow = async (id) => {
-    const { data } = await getANotes(id);
-    setNoteData(data);
-    setShow(true);
-  }
-  const deleteNote = async (noteId) => {
-    // Create a copy of the category object
-    const updatedCategory = { ...cat };
+      updateDoc(doc(firestore, 'notes', uid), {
+       fav:""
+      })
+        .then(() => {
+          // console.log("Data updated successfully!");
+          toast.success("removed from favourites")
+          // navigate('/home')
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.warning(error)
+        });
   
-    if (updatedCategory) {
-      if (updatedCategory.allNotes) {
-        // Filter out the note with the given noteId from the allNotes array
-        updatedCategory.allNotes = updatedCategory.allNotes.filter((note) => note.id !== noteId);
-  
-        // Update the category
-        await updateCategory(categoryId, updatedCategory);
-  
-        // Update the state with the modified category object
-        setCat(updatedCategory);
-      } else {
-        console.error('Selected category has no notes');
-      }
-    } else {
-      console.error('Category not found');
     }
-  }
   
-
-  const fetchCategory = async () => {
-    const { data } = await getACategories(categoryId);
-    setCat(data);
-  }
-
   useEffect(() => {
-    fetchCategory();
-  }, []);
+    async function fetchData() {
+      if (loginStatus) {
+        const q = query(
+          collection(firestore, "notes"),
+          where("userId", "==", userID),
+          where("fav", "==", true)
+        );
+        
+        try {
+          const querySnapshot = await getDocs(q);
+          const notesArray = [];
+          querySnapshot.forEach((doc) => {
+            // console.log(doc.id, " => ", doc.data());
+            notesArray.push({ id: doc.id, data: doc.data() });
+            // console.log(notesArray);
+            setAllNotes(notesArray); // 
+          });
+        } catch (error) {
+          console.error("Error getting documents: ", error);
+          // toast.warning("Error getting documents: ", error)
+        }
+      }
+    }
 
+    fetchData();
+  }, [handleDelete,loginStatus, userID, firestore]);
+
+  
+ 
+//  console.log(allNotes);
+ 
+  
+  
   return (
-    <>
-      <h4 className='text-start mx-5 mt-2'>{cat.categoryName}</h4>
-
-      <div style={{minHeight:"80vh"}} className='d-flex flex-wrap flex-row'>
-        {cat.allNotes ? cat.allNotes.map((item) => (
-          <div key={item.id} style={{ width: "280px", position: "relative" }}>
-            <img onClick={() => handleShow(item?.id)} style={{ objectFit: "cover" }} className="img-fluid w-100 mt-0 po" src={sticky} alt="" />
-            <h5 className='text-break' style={{color:"black", Width: "50px", position: "absolute", top: "90px", left: "80px", height: "300px" }}>{item?.title}</h5>
-            <div style={{color:"black", position: "absolute", top: "180px", left: "90px" }} className='d-flex'>
-              <h6>{item?.time}</h6>
-              <i onClick={() => deleteNote(item?.id)} className="fa-solid fa-trash text-danger mx-2"></i>
+   <>
+      {loginStatus?<div className='d-flex flex-wrap '>
+  {allNotes.length>0 ?allNotes.map((note) => (
+          <div key={note.id} style={{ width: "280px", position: "relative" }}>
+            <img  onClick={()=>handleShow(note.data.name,note.data.description,note.id)} style={{ objectFit: "cover" }} className="img-fluid w-100 mt-0 po" src={sticky} alt="" />
+            <h5  className='text-break' style={{color:"black", Width: "50px", position: "absolute", top: "90px", left: "80px", height: "300px" }}>{note.data.name}</h5>
+            <div style={{color:"black", position: "absolute", top: "180px", left: "90px" }
+          } className='d-flex'>
+              <h6>{note.data.currentTime}</h6>
+             <i onClick={()=>handleDelete(note.id)} className="px-3 mb-2 fa-solid fa-xmark text-danger"></i>
             </div>
+          </div>)):
+       <p className='text-danger ms-2'>No favourites added</p>}
+      <Modal size='xl' show={show} onHide={handleClose} >
+          <Modal.Header closeButton>
+          <div className='d-flex w-100  justify-content-between'>
+              <Modal.Title className='text-break'>{title}</Modal.Title>
+             <div>
+             <button className='btn' onClick={() => navigate(userid)}><i class="fa-solid fa-pen"></i></button>
+                {/* <button onClick={()=>addToFavourites(userid)} className='btn'><i class="fa-solid fa-heart" style={{color: "#f60909"}}></i></button> */}
+             </div>
           </div>
-        )) : <p className='text-danger'>No Notes</p>}
-      </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title className='text-break'>{notesdata?.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className='text-break'><ReactQuill  modules={{ toolbar: false}}  theme="snow" value={description} placeholder='Enter your notes !!!' />
+  
+  </Modal.Body>
           
-        </Modal.Header>
-        <Modal.Body className='text-break'>{notesdata?.note}</Modal.Body>
-      </Modal>
-    </>
-  );
+        </Modal>
+        <ToastContainer position="top-center" theme="colored" autoClose={2000} />
+  
+      </div>: <Navigate to="/" />}
+   </>
+  )
 }
 
-export default CategoryPage;
+export default View

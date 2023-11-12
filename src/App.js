@@ -8,6 +8,7 @@ import Auth from './Components/Auth';
 import AddPage from './Pages/AddPage'
 import CategoryPage from './Pages/CategoryPage'
 import { useSelector} from "react-redux";
+import { doc, getDoc } from "firebase/firestore";
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
       <Route path='/register' element={<Auth register/>}/>
       <Route path={'/home'} element={<DisplayPage/>} />
       <Route path={'/add'} element={<AddPage/>} />
-      <Route path="/category/:categoryId" element={<CategoryPage/>} />
+      <Route path="/edit/:id" element={<AddPage edit/>} />
+      <Route path="/favourites" element={<CategoryPage/>} />
      </Routes>
      <Footer/>
     </div>

@@ -27,7 +27,7 @@ No specific code license, just pure dedication.
 Created with love for the craft.
           </h6>
         </div>
-        <div className="links d-flex flex-column">
+        {/* <div className="links d-flex flex-column">
           <h4>Links</h4>
           <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
             Home
@@ -47,7 +47,7 @@ Created with love for the craft.
           >
            Category
           </Link>
-        </div>
+        </div> */}
       
         <div className="contact d-flex flex-column flex-wrap">
           <h4>Contact Us</h4>

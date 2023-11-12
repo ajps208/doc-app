@@ -1,50 +1,28 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import { Parallax } from "react-parallax";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './LanginPage.css'
-import { doc, getDocs,collection } from 'firebase/firestore';
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { useSelector } from "react-redux";
-function LandingPage() {
-  // console.log(firebase);
-  const mode=useSelector((state)=>state.darkmode.modestatus)
-  const loginStatus=useSelector((state)=>state.loginSlice.loginstate)
-  const userID=useSelector((state)=>state.loginSlice.userid)
-  const firestore=useSelector((state)=>state.firebaseSlice.Firestore)
-  const [username, setUsername] = useState("");
 
-  console.log(userID);
-  const navigateByUrl=useNavigate()
-  const navigate=()=>{
-    loginStatus?navigateByUrl('/add'):navigateByUrl('/login')
+function LandingPage() {
+  const mode = useSelector((state) => state.darkmode.modestatus);
+  const loginStatus = useSelector((state) => state.loginSlice.loginstate);
+  const userID = useSelector((state) => state.loginSlice.userid);
+  const firestore = useSelector((state) => state.firebaseSlice.Firestore);
+  const [username, setUsername] = useState("");
+  const navigateByUrl = useNavigate();
+
+  const navigate = () => {
+    loginStatus ? navigateByUrl('/add') : navigateByUrl('/login');
   }
-  const navigate1=()=>{
-    loginStatus? navigateByUrl('/home'):navigateByUrl('/login')
+
+  const navigate1 = () => {
+    loginStatus ? navigateByUrl('/home') : navigateByUrl('/login');
   }
-  const fetchAllUsersData = async () => {
-    const usersCollection = 'users'; 
-    try {
-      const querySnapshot = await getDocs(collection(firestore, usersCollection));
-  
-      const allUsersData = [];
-      querySnapshot.forEach((doc) => {
-        if (doc.exists()) {
-          const userData = doc.data();
-          allUsersData.push(userData);
-        }
-      });
-      const currentuser = allUsersData.find((userData) => userData.id === userID);
-      console.log('All Users Data:', currentuser);
-      setUsername(currentuser.username)
-    } catch (error) {
-      console.error('Error fetching all users data:', error);
-    }
-  };
-  
-  useEffect(() => {
-    fetchAllUsersData();
-  }, []);
-  
+
+ 
 
   
   return (
@@ -57,21 +35,14 @@ function LandingPage() {
         <Row className="mt-5 mb-5 align-items-center justify-content-between">
           <Col></Col>
           <Col id="first" lg={8}>
-         {loginStatus? <h2 className="mb-3" style={{ color: "black", textShadow: "2px 2px 2px #FFFFFF" }}>
-        Welcome {" "}
+      <h2 className="mb-3" style={{ color: "black", textShadow: "2px 2px 2px #FFFFFF" }}>
+        Welcome to {" "}
         
-          <span style={{ textShadow: "2px 2px 2px #000" }} className="text-light">
-          {username}
+           <span style={{ textShadow: "2px 2px 2px #000" }} className="text-light">
+             NOTESIN
           </span>
    
-      </h2>:<h2 className="mb-3" style={{ color: "black", textShadow: "2px 2px 2px #FFFFFF" }}>
-        Welcome to{" "}
-        
-          <span style={{ textShadow: "2px 2px 2px #000" }} className="text-light">
-            NOTESIN
-          </span>
-   
-      </h2>}
+      </h2>
             <p
               className=" fs-5 "
               style={{ color:"black",textAlign: "justify", textShadow: "2px 2px 2px #FFFFFF" }}
@@ -132,7 +103,7 @@ function LandingPage() {
         >
           <i class="fa-regular fa-folder-open fa-beat-fade fa-3x"></i>
           <Card.Body>
-            <Card.Title>Categorize Your Notes</Card.Title>
+            <Card.Title>Add Favourites</Card.Title>
           </Card.Body>
         </Card>
       </div>
