@@ -1,6 +1,5 @@
 import React from 'react'
 import View from "../Components/View"
-import Category from "../Components/Category"
 import { Link } from 'react-router-dom'
 import { Row,Col } from 'react-bootstrap'
 import { Navigate } from 'react-router-dom';
