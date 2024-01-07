@@ -23,6 +23,12 @@ Welcome to NOTESIN, an intuitive note creation and viewing app that aims to simp
 - **Firebase:** A real-time NoSQL database used for data storage and synchronization, providing a reliable and efficient platform.
 
 - **Express.js:** A web application framework for Node.js, utilized to create a robust and scalable server.
+- ## 📷 Preview
+
+<div classname="d-flex flex-row">
+  <img src="public/asset/Screenshot%202024-01-07%20222039.png" alt="TicketMate Preview" width="400" height="200">
+  <img src="public/asset/Screenshot 2024-01-07 222101.png" alt="TicketMate Preview" width="400" height="200">
+</div>
 
 ## 🛠 Getting Started
 
