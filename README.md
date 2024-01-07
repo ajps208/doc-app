@@ -25,9 +25,12 @@ Welcome to NOTESIN, an intuitive note creation and viewing app that aims to simp
 - **Express.js:** A web application framework for Node.js, utilized to create a robust and scalable server.
 - ## 📷 Preview
 
-<div classname="d-flex flex-row">
-  <img src="public/asset/Screenshot%202024-01-07%20222039.png" alt="TicketMate Preview" width="400" height="200">
-  <img src="public/asset/Screenshot 2024-01-07 222101.png" alt="TicketMate Preview" width="400" height="200">
+<div class="d-flex flex-row">
+  <img src="public/asset/Screenshot 2024-01-07 222128.png" alt="TicketMate Preview" width="400" height="200">
+  <video width="400" height="200" controls>
+    <source src="public/asset/Notes App - Google Chrome 2023-11-12 21-54-37.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 ## 🛠 Getting Started
